@@ -51,3 +51,82 @@ sources:
             description: logistic cost
           - name: ship_cost
             description: shipping cost
+
+models:
+  - name: int_sales_margin
+    description: margin calculation per order
+    columns:
+      - name: products_id
+        description: product key
+        tests:
+          - not_null
+      - name: orders_id
+        description: order key
+        tests:
+          - not_null
+      - name: date_date
+        description: sale date
+        tests:
+          - not_null
+      - name: revenue
+        description: order revenue
+        tests:
+          - not_null
+      - name: quantity
+        description: order quantity
+        tests:
+          - not_null
+      - name: purchase_price
+        description: purchase price
+        tests:
+          - not_null
+      - name: purchase_cost
+        description: purchase cost
+        tests:
+          - not_null
+      - name: margin
+        description: margin = revenue - purchase cost
+        tests:
+          - not_null
+    tests:
+      - unique:
+          column_name: "(orders_id || '-' || products_id)"
+  - name: int_orders_margin
+    columns:
+      - name: orders_id
+        description: primary
+        tests:
+          - not_null
+          - unique
+      - name: date_date
+        description: order date
+        tests:
+          - not_null
+      - name: revenue
+        description: order revenue
+        tests:
+          - not_null
+      - name: quantity
+        description: order quantity
+        tests:
+          - not_null
+      - name: purchase_cost
+        description: order purchase cost
+        tests:
+          - not_null
+      - name: margin
+        description: order margin
+        tests:
+          - not_null
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+      
