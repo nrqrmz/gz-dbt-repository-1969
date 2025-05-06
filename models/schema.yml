@@ -3,10 +3,51 @@ version: 2
 sources:
   - name: raw
     schema: gz_raw_data
+    description: Greenweez raw data
     tables:
       - name: sales
         identifier: raw_gz_sales
+        description: Greenweez sales
+        freshness:
+          warn_after: { count: 90, period: day }
+        loaded_at_field: cast(date_date as timestamp)
+        columns:
+          - name: date_date
+            description: order date
+          - name: orders_id
+            description: foreign key to join with ship table
+          - name: pdt_id 
+            description: foreign key to join with products table
+          - name: revenue
+            description: order revenue
+          - name: quantity
+            description: order quantity
+        tests:
+          - unique:
+              column_name: "(orders_id || '-' || pdt_id)"
       - name: product
         identifier: raw_gz_product
+        description: Greenweez products
+        columns:
+          - name: products_id
+            description: primary key
+            tests:
+              - unique
+              - not_null
+          - name: purchSE_PRICE
+            description: purchase price
       - name: ship
         identifier: raw_gz_ship
+        description: Greenweez shipping
+        columns:
+          - name: orders_id
+            description: primary key
+            tests:
+              - unique
+              - not_null
+          - name: shipping_fee
+            description: shipping fee
+          - name: logCost
+            description: logistic cost
+          - name: ship_cost
+            description: shipping cost
