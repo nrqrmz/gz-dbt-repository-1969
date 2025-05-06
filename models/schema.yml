@@ -91,6 +91,7 @@ models:
     tests:
       - unique:
           column_name: "(orders_id || '-' || products_id)"
+  
   - name: int_orders_margin
     columns:
       - name: orders_id
@@ -118,7 +119,104 @@ models:
         description: order margin
         tests:
           - not_null
+
+  - name: int_orders_operational
+    columns:
+      - name: orders_id
+        description: primary key
+        tests:
+          - not_null
+          - unique
+      - name: date_date
+        description: order date
+        tests:
+          - not_null
+      - name: operational_margin
+        description: margin + shipping fee - logcost -  ship_cost
+        tests:
+          - not_null
+      - name: quantity
+        description: order quantity
+        tests:
+          - not_null
+      - name: revenue
+        description: order revenue
+        tests:
+          - not_null
+      - name: purchase_cost
+        description: order purchase cost
+        tests:
+          - not_null
+      - name: margin
+        description: order margin
+        tests:
+          - not_null
+      - name: shipping_fee
+        description: order shipping fee
+        tests:
+          - not_null
+      - name: logcost
+        description: order logistic cost
+        tests:
+          - not_null
+      - name: ship_cost
+        description: order shipping cost
+        tests:
+          - not_null
       
+  - name: finance_days
+    columns:
+      - name: date_date
+        description: date
+        tests:
+          - not_null
+      - name: nb_transactions
+        description: transactions number per day
+        tests:
+          - not_null
+      - name: revenue
+        description: daily revenue
+        tests:
+          - not_null
+      - name: average_basket
+        description: average daily basket
+        tests:
+          - not_null
+      - name: margin
+        description: daily margin
+        tests:
+          - not_null
+      - name: operational_margin
+        description: daily operational margin
+        tests:
+          - not_null
+      - name: purchase_cost
+        description: daily purchase cost
+        tests:
+          - not_null
+      - name: shipping_fee
+        description: daily shipping fee
+        tests:
+          - not_null
+      - name: logcost
+        description: daily logistic cost
+        tests:
+          - not_null
+      - name: ship_cost
+        description: daily shipping cost
+        tests:
+          - not_null
+      - name: quantity
+        description: daily quantity
+        tests:
+          - not_null
+      
+      
+      
+      
+      
+      
+
       
       
       
