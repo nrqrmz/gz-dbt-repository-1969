@@ -1,0 +1,230 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: gz_raw_data
+    description: Greenweez raw data
+    tables:
+      - name: sales
+        identifier: raw_gz_sales
+        description: Greenweez sales
+        freshness:
+          warn_after: { count: 90, period: day }
+        loaded_at_field: cast(date_date as timestamp)
+        columns:
+          - name: date_date
+            description: order date
+          - name: orders_id
+            description: foreign key to join with ship table
+          - name: pdt_id 
+            description: foreign key to join with products table
+          - name: revenue
+            description: order revenue
+          - name: quantity
+            description: order quantity
+        tests:
+          - unique:
+              column_name: "(orders_id || '-' || pdt_id)"
+      - name: product
+        identifier: raw_gz_product
+        description: Greenweez products
+        columns:
+          - name: products_id
+            description: primary key
+            tests:
+              - unique
+              - not_null
+          - name: purchSE_PRICE
+            description: purchase price
+      - name: ship
+        identifier: raw_gz_ship
+        description: Greenweez shipping
+        columns:
+          - name: orders_id
+            description: primary key
+            tests:
+              - unique
+              - not_null
+          - name: shipping_fee
+            description: shipping fee
+          - name: logCost
+            description: logistic cost
+          - name: ship_cost
+            description: shipping cost
+
+models:
+  - name: int_sales_margin
+    description: margin calculation per order
+    columns:
+      - name: products_id
+        description: product key
+        tests:
+          - not_null
+      - name: orders_id
+        description: order key
+        tests:
+          - not_null
+      - name: date_date
+        description: sale date
+        tests:
+          - not_null
+      - name: revenue
+        description: order revenue
+        tests:
+          - not_null
+      - name: quantity
+        description: order quantity
+        tests:
+          - not_null
+      - name: purchase_price
+        description: purchase price
+        tests:
+          - not_null
+      - name: purchase_cost
+        description: purchase cost
+        tests:
+          - not_null
+      - name: margin
+        description: margin = revenue - purchase cost
+        tests:
+          - not_null
+    tests:
+      - unique:
+          column_name: "(orders_id || '-' || products_id)"
+  
+  - name: int_orders_margin
+    columns:
+      - name: orders_id
+        description: primary
+        tests:
+          - not_null
+          - unique
+      - name: date_date
+        description: order date
+        tests:
+          - not_null
+      - name: revenue
+        description: order revenue
+        tests:
+          - not_null
+      - name: quantity
+        description: order quantity
+        tests:
+          - not_null
+      - name: purchase_cost
+        description: order purchase cost
+        tests:
+          - not_null
+      - name: margin
+        description: order margin
+        tests:
+          - not_null
+
+  - name: int_orders_operational
+    columns:
+      - name: orders_id
+        description: primary key
+        tests:
+          - not_null
+          - unique
+      - name: date_date
+        description: order date
+        tests:
+          - not_null
+      - name: operational_margin
+        description: margin + shipping fee - logcost -  ship_cost
+        tests:
+          - not_null
+      - name: quantity
+        description: order quantity
+        tests:
+          - not_null
+      - name: revenue
+        description: order revenue
+        tests:
+          - not_null
+      - name: purchase_cost
+        description: order purchase cost
+        tests:
+          - not_null
+      - name: margin
+        description: order margin
+        tests:
+          - not_null
+      - name: shipping_fee
+        description: order shipping fee
+        tests:
+          - not_null
+      - name: logcost
+        description: order logistic cost
+        tests:
+          - not_null
+      - name: ship_cost
+        description: order shipping cost
+        tests:
+          - not_null
+      
+  - name: finance_days
+    columns:
+      - name: date_date
+        description: date
+        tests:
+          - not_null
+      - name: nb_transactions
+        description: transactions number per day
+        tests:
+          - not_null
+      - name: revenue
+        description: daily revenue
+        tests:
+          - not_null
+      - name: average_basket
+        description: average daily basket
+        tests:
+          - not_null
+      - name: margin
+        description: daily margin
+        tests:
+          - not_null
+      - name: operational_margin
+        description: daily operational margin
+        tests:
+          - not_null
+      - name: purchase_cost
+        description: daily purchase cost
+        tests:
+          - not_null
+      - name: shipping_fee
+        description: daily shipping fee
+        tests:
+          - not_null
+      - name: logcost
+        description: daily logistic cost
+        tests:
+          - not_null
+      - name: ship_cost
+        description: daily shipping cost
+        tests:
+          - not_null
+      - name: quantity
+        description: daily quantity
+        tests:
+          - not_null
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      
+      
+      
+      
