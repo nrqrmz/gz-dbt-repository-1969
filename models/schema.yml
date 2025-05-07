@@ -277,7 +277,17 @@ models:
         tests:
           - not_null
       
-      
+  - name: finance_campaigns_day
+    description: global kpi
+    columns:
+      - name: ads_margin
+        description: operational_margin - ads_cost
+        tests:
+          - not_null
+      - name: average_basket
+        description: average basket cost for each day
+        tests:
+          - not_null    
       
       
       
