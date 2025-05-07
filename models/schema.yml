@@ -51,6 +51,39 @@ sources:
             description: logistic cost
           - name: ship_cost
             description: shipping cost
+      - name: adwords
+        identifier: raw_gz_adwords
+        description: adwords campaign data
+        columns:
+          - name: date_date
+            description: date column
+            tests:
+              - not_null
+      - name: bing
+        identifier: raw_gz_bing
+        description: bing campaign data
+        columns:
+          - name: date_date
+            description: date column
+            tests:
+              - not_null
+      - name: criteo
+        identifier: raw_gz_criteo
+        description: criteo campaign data
+        columns:
+          - name: date_date
+            description: date column
+            tests:
+              - not_null
+      - name: facebook
+        identifier: raw_gz_facebook
+        description: facebook campaign data
+        columns:
+          - name: date_date
+            description: date column
+            tests:
+              - not_null
+              
 
 models:
   - name: int_sales_margin
@@ -163,7 +196,40 @@ models:
         description: order shipping cost
         tests:
           - not_null
+
+  - name: int_campaigns
+    description: data from all campaigns
+    columns:
+      - name: paid_source
+        tests:
+          - not_null
+      - name: campaign_name
+        tests:
+          - not_null
+    tests:
+      - unique:
+          column_name: "(campaign_key || '-' || date_date)"
       
+  - name: int_campaigns_day
+    description: daily campaign metrics
+    columns:
+      - name: date_date
+        description: date column
+        tests:
+          - not_null
+      - name: ads_cost
+        description: ads cost grouped by day
+        tests:
+          - not_null
+      - name: ads_impression
+        description: ads impression grouped by day
+        tests:
+          - not_null
+      - name: ads_clicks
+        description: daily clicks
+        tests:
+          - not_null
+
   - name: finance_days
     columns:
       - name: date_date
@@ -211,7 +277,17 @@ models:
         tests:
           - not_null
       
-      
+  - name: finance_campaigns_day
+    description: global kpi
+    columns:
+      - name: ads_margin
+        description: operational_margin - ads_cost
+        tests:
+          - not_null
+      - name: average_basket
+        description: average basket cost for each day
+        tests:
+          - not_null    
       
       
       
