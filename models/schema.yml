@@ -210,6 +210,26 @@ models:
       - unique:
           column_name: "(campaign_key || '-' || date_date)"
       
+  - name: int_campaigns_day
+    description: daily campaign metrics
+    columns:
+      - name: date_date
+        description: date column
+        tests:
+          - not_null
+      - name: ads_cost
+        description: ads cost grouped by day
+        tests:
+          - not_null
+      - name: ads_impression
+        description: ads impression grouped by day
+        tests:
+          - not_null
+      - name: ads_clicks
+        description: daily clicks
+        tests:
+          - not_null
+
   - name: finance_days
     columns:
       - name: date_date
