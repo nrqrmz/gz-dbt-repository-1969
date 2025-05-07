@@ -51,6 +51,39 @@ sources:
             description: logistic cost
           - name: ship_cost
             description: shipping cost
+      - name: adwords
+        identifier: raw_gz_adwords
+        description: adwords campaign data
+        columns:
+          - name: date_date
+            description: date column
+            tests:
+              - not_null
+      - name: bing
+        identifier: raw_gz_bing
+        description: bing campaign data
+        columns:
+          - name: date_date
+            description: date column
+            tests:
+              - not_null
+      - name: criteo
+        identifier: raw_gz_criteo
+        description: criteo campaign data
+        columns:
+          - name: date_date
+            description: date column
+            tests:
+              - not_null
+      - name: facebook
+        identifier: raw_gz_facebook
+        description: facebook campaign data
+        columns:
+          - name: date_date
+            description: date column
+            tests:
+              - not_null
+              
 
 models:
   - name: int_sales_margin
